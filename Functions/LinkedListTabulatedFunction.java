@@ -2,7 +2,7 @@ package Functions;
 
 
 
-class LinkedListTabulatedFunction implements TabulatedFunction{
+public class LinkedListTabulatedFunction implements TabulatedFunction{
 
     PointList list;
     double leftBoard;
