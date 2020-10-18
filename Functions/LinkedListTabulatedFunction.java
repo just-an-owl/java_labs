@@ -4,14 +4,27 @@ package Functions;
 
 class LinkedListTabulatedFunction implements TabulatedFunction{
 
+    PointList list;
+    double leftBoard;
+    double rightBoard;
+
+
+    public LinkedListTabulatedFunction(final double newLeftX, final double newRightX, final int pointsCount){
+        leftBoard = newLeftX;
+        rightBoard = newRightX;
+        for (int i=0; i<pointsCount; ++i){
+            list.add(new FunctionPoint());
+        }
+    }
+
     @Override
     public void addPoint(FunctionPoint point) {
-
+        list.add(point);
     }
 
     @Override
     public FunctionPoint getPoint(int n) {
-        return null;
+        return list.getPoint(n);
     }
 
     @Override
