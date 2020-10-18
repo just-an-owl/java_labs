@@ -6,7 +6,7 @@ interface TabulatedFunction{
     FunctionPoint getPoint(int n);
     double getLeftDomainBorder();
     double getRightDomainBorder();
-    double getFuctionValue(final double x);
+    double getFunctionValue(final double x);
     int getPointCount();
     void setPoint(final int index, final FunctionPoint point);
     double getPointX(final int index);

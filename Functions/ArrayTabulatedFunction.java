@@ -77,7 +77,7 @@ public class ArrayTabulatedFunction implements TabulatedFunction{
         return rightX;
     }
 
-    public double getFuctionValue(final double x){
+    public double getFunctionValue(final double x){
         int iter = 0;
         double k;
         double b;

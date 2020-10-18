@@ -4,14 +4,14 @@ package Functions;
 
 public class LinkedListTabulatedFunction implements TabulatedFunction{
 
-    PointList list;
-    double leftBoard;
-    double rightBoard;
+    private PointList list;
+    private double leftX;
+    private double rightX;
 
 
     public LinkedListTabulatedFunction(final double newLeftX, final double newRightX, final int pointsCount){
-        leftBoard = newLeftX;
-        rightBoard = newRightX;
+        leftX = newLeftX;
+        rightX = newRightX;
         list = new PointList();
         for (int i=0; i<pointsCount; ++i){
             list.add(new FunctionPoint());
@@ -20,7 +20,13 @@ public class LinkedListTabulatedFunction implements TabulatedFunction{
 
     @Override
     public void addPoint(FunctionPoint point) {
-        list.add(point);
+        if(point.getX()>leftX && point.getX()<rightX)
+        {
+
+            list.add(point);
+        }
+        else
+        {}
     }
 
     @Override
@@ -30,57 +36,57 @@ public class LinkedListTabulatedFunction implements TabulatedFunction{
 
     @Override
     public double getLeftDomainBorder() {
-        return 0;
+        return leftX;
     }
 
     @Override
     public double getRightDomainBorder() {
-        return 0;
+        return rightX;
     }
 
     @Override
-    public double getFuctionValue(double x) {
+    public double getFunctionValue(double x) {
         return 0;
     }
 
     @Override
     public int getPointCount() {
-        return 0;
+        return list.getCount();
     }
 
     @Override
     public void setPoint(int index, FunctionPoint point) {
-
+        list.getPoint(index).set(point);
     }
 
     @Override
     public double getPointX(int index) {
-        return 0;
+        return list.getPoint(index).getX();
     }
 
     @Override
     public void setPointX(int index, double x) {
-
+        list.getPoint(index).setX(x);
     }
 
     @Override
     public double getPointY(int index) {
-        return 0;
+        return list.getPoint(index).getY();
     }
 
     @Override
     public void setPointY(int index, double Y) {
-
+        list.getPoint(index).setY(Y);
     }
 
     @Override
     public void deletePoint(int index) {
-
+        list.deletePointByIndex(index);
     }
 }
 
 class PointList{
-    class Node{       
+    private class Node{
        FunctionPoint data;
        Node linkUp;
        Node linkDown; 
@@ -95,8 +101,8 @@ class PointList{
             linkUp = null;
        }
     }
-    Node head;
-    int count;
+    private Node head;
+    private int count;
     PointList(){
         head = new Node();
         count = 0;
@@ -149,6 +155,7 @@ class PointList{
         head_cloud.linkDown.linkUp = head_cloud;
         head_cloud.linkDown.linkDown = cloud;        
     }
+    int getCount(){return count;}
     void deletePointByIndex(int index){
         Node head_cloud = head.linkDown;
         for(int i=0; i<index; ++i){
