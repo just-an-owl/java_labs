@@ -12,6 +12,7 @@ public class LinkedListTabulatedFunction implements TabulatedFunction{
     public LinkedListTabulatedFunction(final double newLeftX, final double newRightX, final int pointsCount){
         leftBoard = newLeftX;
         rightBoard = newRightX;
+        list = new PointList();
         for (int i=0; i<pointsCount; ++i){
             list.add(new FunctionPoint());
         }
