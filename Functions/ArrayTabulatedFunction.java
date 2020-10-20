@@ -87,16 +87,33 @@ public class ArrayTabulatedFunction implements TabulatedFunction{
             while(iter<arrayPoint.length && x>arrayPoint[iter].getX()) 
             {
                 ++iter;
-            }            
+            }
+            if (iter==0) {
+                double y1 = 0;
+                double x1 = leftX;
+                double y2 = arrayPoint[arrayPoint.length].getY();
+                double x2 = arrayPoint[arrayPoint.length].getX();
+                b=(y2-(y1*x1/x2))/(((-1)*x2/x1)+1);
+                k = (y1-b)/x1;
+                return k*x+b;
+            }
             if(iter==fullnessArrayPoint){
-                k=(rightY-arrayPoint[iter-1].getY())/(rightX-arrayPoint[iter-1].getX());
-                b=rightY - k*rightX;
+                double y1 = 0;
+                double x1 = rightX;
+                double y2 = arrayPoint[arrayPoint.length].getY();
+                double x2 = arrayPoint[arrayPoint.length].getX();
+                b=(y2-(y1*x1/x2))/(((-1)*x2/x1)+1);
+                k = (y1-b)/x1;
                 return k*x+b;
             }
             else
             {
-                k=(arrayPoint[iter-1].getY()-arrayPoint[iter].getY())/(arrayPoint[iter-1].getX()-arrayPoint[iter].getX());
-                b=rightY - k*rightX;
+                double y1 = arrayPoint[iter+1].getY();
+                double x1 = arrayPoint[iter+1].getX();
+                double y2 = arrayPoint[iter].getY();
+                double x2 = arrayPoint[iter].getX();
+                b=(y2-(y1*x1/x2))/(((-1)*x2/x1)+1);
+                k = (y1-b)/x1;
                 return k*x+b;
             }
         }
@@ -111,7 +128,7 @@ public class ArrayTabulatedFunction implements TabulatedFunction{
 
     public void setPoint(final int index, final FunctionPoint point){
         if(leftX<point.getX() & rightX>point.getX()){
-            if((arrayPoint[index-1].getX()<point.getX()||index==0) & (arrayPoint[index+1].getX()>point.getX()||index+1==arrayPoint.length)){
+            if((index==0||arrayPoint[index-1].getX()<point.getX()) & (index+1==arrayPoint.length||arrayPoint[index+1].getX()>point.getX())){
                 arrayPoint[index].set(point);
                 ++fullnessArrayPoint;
             }
