@@ -2,6 +2,8 @@ package Functions;
 
 import Functions.FunctionPoint;
 
+import java.util.Arrays;
+
 public class ArrayTabulatedFunction implements TabulatedFunction{
     private FunctionPoint[] arrayPoint;
     private final double leftX;
@@ -109,7 +111,7 @@ public class ArrayTabulatedFunction implements TabulatedFunction{
 
     public void setPoint(final int index, final FunctionPoint point){
         if(leftX<point.getX() & rightX>point.getX()){
-            if(arrayPoint[index-1].getX()<point.getX() & arrayPoint[index+1].getX()>point.getX()){
+            if((arrayPoint[index-1].getX()<point.getX()||index==0) & (arrayPoint[index+1].getX()>point.getX()||index+1==arrayPoint.length)){
                 arrayPoint[index].set(point);
                 ++fullnessArrayPoint;
             }
