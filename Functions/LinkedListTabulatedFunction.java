@@ -22,8 +22,11 @@ public class LinkedListTabulatedFunction implements TabulatedFunction{
     public void addPoint(FunctionPoint point) {
         if(point.getX()>leftX && point.getX()<rightX)
         {
-
-            list.add(point);
+            int i=0;
+            while(point.getX()>list.getPoint(i).getX()){
+                ++i;
+            }
+            list.addByIndex(point, i);
         }
         else
         {}
@@ -31,7 +34,11 @@ public class LinkedListTabulatedFunction implements TabulatedFunction{
 
     @Override
     public FunctionPoint getPoint(int n) {
-        return list.getPoint(n);
+        if(n>=0)
+        {
+            return list.getPoint(n);
+        }
+        return null;
     }
 
     @Override
@@ -46,7 +53,47 @@ public class LinkedListTabulatedFunction implements TabulatedFunction{
 
     @Override
     public double getFunctionValue(double x) {
-        return 0;
+        int iter = 0;
+        double k;
+        double b;
+        if(x>leftX & x<rightX){
+            while(iter<list.getCount() && x>list.getPoint(iter).getX())
+            {
+                ++iter;
+            }
+            if (iter == 0){
+                double y1 = 0;
+                double x1 = leftX;
+                double y2 = list.getPoint(list.getCount()).getY();
+                double x2 = list.getPoint(list.getCount()).getX();
+                b=(y2-(y1*x1/x2))/(((-1)*x2/x1)+1);
+                k = (y1-b)/x1;
+                return k*x+b;
+            }
+            if(iter==list.getCount()){
+                double y1 = 0;
+                double x1 = rightX;
+                double y2 = list.getPoint(list.getCount()).getY();
+                double x2 = list.getPoint(list.getCount()).getX();
+                b=(y2-(y1*x1/x2))/(((-1)*x2/x1)+1);
+                k = (y1-b)/x1;
+                return k*x+b;
+            }
+            else
+            {
+                double y1 = list.getPoint(iter+1).getY();
+                double x1 = list.getPoint(iter+1).getX();
+                double y2 = list.getPoint(iter).getY();
+                double x2 = list.getPoint(iter).getX();
+                b=(y2-(y1*x1/x2))/(((-1)*x2/x1)+1);
+                k = (y1-b)/x1;
+                return k*x+b;
+            }
+
+        }
+        else{
+            return Double.NaN;
+        }
     }
 
     @Override
