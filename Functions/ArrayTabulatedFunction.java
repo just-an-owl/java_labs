@@ -83,7 +83,11 @@ public class ArrayTabulatedFunction implements TabulatedFunction{
         int iter = 0;
         double k;
         double b;
-        if(x>leftX & x<rightX){
+        System.out.println(x);
+        System.out.println(leftX);
+        System.out.println(rightX);
+        System.out.print(x>leftX & x<rightX);
+        if(x>leftX && x<rightX){
             while(iter<arrayPoint.length && x>arrayPoint[iter].getX()) 
             {
                 ++iter;
