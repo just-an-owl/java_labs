@@ -81,10 +81,10 @@ public class LinkedListTabulatedFunction implements TabulatedFunction{
             }
             else
             {
-                double y1 = list.getPoint(iter+1).getY();
-                double x1 = list.getPoint(iter+1).getX();
-                double y2 = list.getPoint(iter).getY();
-                double x2 = list.getPoint(iter).getX();
+                double y1 = list.getPoint(iter).getY();
+                double x1 = list.getPoint(iter).getX();
+                double y2 = list.getPoint(iter-1).getY();
+                double x2 = list.getPoint(iter-1).getX();
                 b=(y2-(y1*x1/x2))/(((-1)*x2/x1)+1);
                 k = (y1-b)/x1;
                 return k*x+b;

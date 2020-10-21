@@ -83,11 +83,9 @@ public class ArrayTabulatedFunction implements TabulatedFunction{
         int iter = 0;
         double k;
         double b;
-        System.out.println(x);
-        System.out.println(leftX);
-        System.out.println(rightX);
-        System.out.print(x>leftX & x<rightX);
+
         if(x>leftX && x<rightX){
+
             while(iter<arrayPoint.length && x>arrayPoint[iter].getX()) 
             {
                 ++iter;
@@ -104,20 +102,23 @@ public class ArrayTabulatedFunction implements TabulatedFunction{
             if(iter==fullnessArrayPoint){
                 double y1 = 0;
                 double x1 = rightX;
-                double y2 = arrayPoint[arrayPoint.length].getY();
-                double x2 = arrayPoint[arrayPoint.length].getX();
+                double y2 = arrayPoint[arrayPoint.length-1].getY();
+                double x2 = arrayPoint[arrayPoint.length-1].getX();
                 b=(y2-(y1*x1/x2))/(((-1)*x2/x1)+1);
                 k = (y1-b)/x1;
                 return k*x+b;
             }
             else
             {
-                double y1 = arrayPoint[iter+1].getY();
-                double x1 = arrayPoint[iter+1].getX();
-                double y2 = arrayPoint[iter].getY();
-                double x2 = arrayPoint[iter].getX();
+                double y1 = arrayPoint[iter].getY();
+                double x1 = arrayPoint[iter].getX();
+                double y2 = arrayPoint[iter-1].getY();
+                double x2 = arrayPoint[iter-1].getX();
+
                 b=(y2-(y1*x1/x2))/(((-1)*x2/x1)+1);
+
                 k = (y1-b)/x1;
+
                 return k*x+b;
             }
         }
