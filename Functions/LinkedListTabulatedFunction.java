@@ -103,7 +103,11 @@ public class LinkedListTabulatedFunction implements TabulatedFunction{
 
     @Override
     public void setPoint(int index, FunctionPoint point) {
-        list.getPoint(index).set(point);
+        if(leftX<point.getX() & rightX>point.getX()){
+            if((index==0||list.getPoint(index-1).getX()<point.getX()) & (index+1== list.getCount()||list.getPoint(index+1).getX()>point.getX())){
+                list.getPoint(index).set(point);
+            }
+        }
     }
 
     @Override

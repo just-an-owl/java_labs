@@ -4,7 +4,7 @@ import Functions.FunctionPoint;
 
 import java.util.Arrays;
 
-public class ArrayTabulatedFunction implements TabulatedFunction{
+public class ArrayTabulatedFunction implements TabulatedFunction {
     private FunctionPoint[] arrayPoint;
     private final double leftX;
     private final double rightX;
@@ -13,7 +13,9 @@ public class ArrayTabulatedFunction implements TabulatedFunction{
     private final double step;
     private int fullnessArrayPoint;//кол-во заполненных ячеек
 
-    public ArrayTabulatedFunction(final double newLeftX, final double newRightX, final int pointsCount) {
+    public ArrayTabulatedFunction(final double newLeftX, final double newRightX, final int pointsCount) throws InappropriateFunctionPointException{
+        if (pointsCount<0)
+            throw new InappropriateFunctionPointException("invalid counts of point, count must be >0");
         leftX = newLeftX;
         rightX = newRightX;
         fullnessArrayPoint = 0;
@@ -36,7 +38,7 @@ public class ArrayTabulatedFunction implements TabulatedFunction{
         fullnessArrayPoint=arrayPoint.length;
     }
 
-    public void addPoint(FunctionPoint point) {
+    public void addPoint(FunctionPoint point) throws InappropriateFunctionPointException {
         if(point.getX()>leftX && point.getX()<rightX)
             {if(arrayPoint.length == fullnessArrayPoint){
                 FunctionPoint[] n_mass = new FunctionPoint[arrayPoint.length+20];
@@ -60,15 +62,17 @@ public class ArrayTabulatedFunction implements TabulatedFunction{
                 System.arraycopy(arrayPoint, i, n_mass, i+1, fullnessArrayPoint-i);
                 arrayPoint=n_mass;      
             }
-        }     
+        }
+        else throw new InappropriateFunctionPointException("invalid value X of point");
     }
 
-    public FunctionPoint getPoint(int n){
+    public FunctionPoint getPoint(int n) throws FunctionPointIndexOutOfBoundsException{
         if(n>=0 & n<fullnessArrayPoint)
         {
             return (FunctionPoint)arrayPoint[n];
         }
-        return null;
+        else throw new FunctionPointIndexOutOfBoundsException("invalid number");
+
     }
 
     public double getLeftDomainBorder() {
@@ -79,7 +83,7 @@ public class ArrayTabulatedFunction implements TabulatedFunction{
         return rightX;
     }
 
-    public double getFunctionValue(final double x){
+    public double getFunctionValue(final double x) throws InappropriateFunctionPointException{
         int iter = 0;
         double k;
         double b;
@@ -123,7 +127,7 @@ public class ArrayTabulatedFunction implements TabulatedFunction{
             }
         }
         else{
-            return Double.NaN;
+            throw new InappropriateFunctionPointException("invalid value");
         }
     }
 
@@ -140,40 +144,50 @@ public class ArrayTabulatedFunction implements TabulatedFunction{
         }
     }
 
-    public double getPointX(final int index) {
-        if (arrayPoint.length > index){
+    public double getPointX(final int index) throws FunctionPointIndexOutOfBoundsException {
+        if(index>=0 & index<fullnessArrayPoint){
             return arrayPoint[index].getX();
         }
-        return Double.NaN;
+        else throw new FunctionPointIndexOutOfBoundsException("invalid number");
     }
 
-    public void setPointX(final int index, final double x){
+    public void setPointX(final int index, final double x) throws FunctionPointIndexOutOfBoundsException, InappropriateFunctionPointException{
         if(leftX<x & rightX>x){
-            if(arrayPoint[index-1].getX()<x & arrayPoint[index+1].getX()>x){
+            if((index==0||arrayPoint[index-1].getX()<x) & (index+1==arrayPoint.length||arrayPoint[index+1].getX()>x)){
                 arrayPoint[index].setX(x);
             }
+            else throw new FunctionPointIndexOutOfBoundsException("invalid number");
         }
+        else throw new InappropriateFunctionPointException("invalid value");
     }
 
-    public double getPointY(final int index){
-        if(index<arrayPoint.length){
+    public double getPointY(final int index) throws FunctionPointIndexOutOfBoundsException{
+        if(index>=0 && index<fullnessArrayPoint){
             return arrayPoint[index].getY();
         }
-        return Double.NaN;
+        else throw new FunctionPointIndexOutOfBoundsException("invalid number");
     }
 
-    public void setPointY(final int index, final double Y) {
-        if (index < arrayPoint.length) {
+    public void setPointY(final int index, final double Y) throws FunctionPointIndexOutOfBoundsException{
+        if (index>=0 && index<fullnessArrayPoint) {
             arrayPoint[index].setY(Y);
             ++fullnessArrayPoint;
         }
+        else throw new FunctionPointIndexOutOfBoundsException("invalid number");
     }
 
-    public void deletePoint(final int index) {
-        for(int i = index; i<arrayPoint.length-1;++i){
-            arrayPoint[i].set(arrayPoint[i+1]);
-        }        
-        arrayPoint[arrayPoint.length-1].setY(Double.NaN);
-        fullnessArrayPoint--;
+    public void deletePoint(final int index) throws FunctionPointIndexOutOfBoundsException{
+        if (fullnessArrayPoint-1<3)
+            throw  new IllegalStateException("points must be more 3");
+        if (index>=0 && index<fullnessArrayPoint)
+        {
+            for(int i = index; i<arrayPoint.length-1;++i)
+            {
+                arrayPoint[i].set(arrayPoint[i+1]);
+            }
+            arrayPoint[arrayPoint.length-1].setY(Double.NaN);
+            fullnessArrayPoint--;
+        }
+        else throw new FunctionPointIndexOutOfBoundsException("invalid index");
     }    
 }
