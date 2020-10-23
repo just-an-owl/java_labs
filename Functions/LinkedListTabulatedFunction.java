@@ -12,14 +12,15 @@ public class LinkedListTabulatedFunction implements TabulatedFunction{
     public LinkedListTabulatedFunction(final double newLeftX, final double newRightX, final int pointsCount){
         leftX = newLeftX;
         rightX = newRightX;
+        double step = (rightX - leftX) / (pointsCount + 2);
         list = new PointList();
         for (int i=0; i<pointsCount; ++i){
-            list.add(new FunctionPoint());
+            list.addNodeToTail(new FunctionPoint(step+step*i, 0));
         }
     }
 
     @Override
-    public void addPoint(FunctionPoint point) {
+    public void addPoint(FunctionPoint point) throws InappropriateFunctionPointException{
         if(point.getX()>leftX && point.getX()<rightX)
         {
             int i=0;
@@ -29,16 +30,19 @@ public class LinkedListTabulatedFunction implements TabulatedFunction{
             list.addByIndex(point, i);
         }
         else
-        {}
+        {
+            throw new InappropriateFunctionPointException("illegal point");
+        }
     }
 
     @Override
-    public FunctionPoint getPoint(int n) {
+    public FunctionPoint getPoint(int n) throws FunctionPointIndexOutOfBoundsException {
         if(n>=0)
         {
             return list.getPoint(n);
         }
-        return null;
+        else throw new FunctionPointIndexOutOfBoundsException("Illegal index");
+
     }
 
     @Override
@@ -62,6 +66,7 @@ public class LinkedListTabulatedFunction implements TabulatedFunction{
                 ++iter;
             }
             if (iter == 0){
+
                 double y1 = 0;
                 double x1 = leftX;
                 double y2 = list.getPoint(list.getCount()).getY();
@@ -71,6 +76,7 @@ public class LinkedListTabulatedFunction implements TabulatedFunction{
                 return k*x+b;
             }
             if(iter==list.getCount()){
+
                 double y1 = 0;
                 double x1 = rightX;
                 double y2 = list.getPoint(list.getCount()).getY();
@@ -81,6 +87,7 @@ public class LinkedListTabulatedFunction implements TabulatedFunction{
             }
             else
             {
+
                 double y1 = list.getPoint(iter).getY();
                 double x1 = list.getPoint(iter).getX();
                 double y2 = list.getPoint(iter-1).getY();
@@ -138,6 +145,9 @@ public class LinkedListTabulatedFunction implements TabulatedFunction{
 
 class PointList{
     private class Node{
+        //это узел списка, поля у него публичные т.к доступ к ним может получить только класс PointList, который реализует
+        //все необходимые процедуры работы с поступающими данными
+        //доступ непоседственно к узлам извне получить невозможно
        FunctionPoint data;
        Node linkUp;
        Node linkDown; 
@@ -159,7 +169,7 @@ class PointList{
         count = 0;
         head.data = null;
     }
-    void add(FunctionPoint point){
+    void addNodeToTail(FunctionPoint point){
         count++;
         if(head!=null) {
             Node head1 = head;
