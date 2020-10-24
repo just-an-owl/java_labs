@@ -8,6 +8,12 @@ public class MainClass{
         catch (InappropriateFunctionPointException fail){
             System.out.println(fail.getMessage());
         }
+        try {
+            ArrayTabulatedFunction arrayTabulatedFunction = new ArrayTabulatedFunction(1, 15, 5);
+        }
+        catch (InappropriateFunctionPointException fail){
+            System.out.println(fail.getMessage());
+        }
 
 
     }
