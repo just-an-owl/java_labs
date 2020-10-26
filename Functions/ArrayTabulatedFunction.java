@@ -1,6 +1,6 @@
-package Functions;
+package functions;
 
-import Functions.FunctionPoint;
+import functions.FunctionPoint;
 
 import java.util.Arrays;
 
@@ -36,6 +36,19 @@ public class ArrayTabulatedFunction implements TabulatedFunction {
             arrayPoint[iter] = new FunctionPoint(leftX + step + iter * step, values[iter]);
         }
         fullnessArrayPoint=arrayPoint.length;
+    }
+    public ArrayTabulatedFunction(final double newLeftX, final double newRightX,FunctionPoint[] points) throws IllegalArgumentException{
+        leftX = newLeftX;
+        rightX = newRightX;
+        step = (rightX-leftX)/(arrayPoint.length+2);
+        arrayPoint = new FunctionPoint[points.length];
+        if (points.length<2) throw new IllegalArgumentException("counts of points must be >=2");
+        for(int i = 0; i<points.length-1;++i){
+            if (points[i].getX()>points[i+1].getX()) throw new IllegalArgumentException("points must be sorted");
+        }
+        for (int i = 0; i<points.length;++i){
+            arrayPoint[i] = new FunctionPoint(points[i]);
+        }
     }
 
     public void addPoint(FunctionPoint point) throws InappropriateFunctionPointException {

@@ -1,4 +1,4 @@
-package Functions;
+package functions;
 
 
 
@@ -16,6 +16,19 @@ public class LinkedListTabulatedFunction implements TabulatedFunction{
         list = new PointList();
         for (int i=0; i<pointsCount; ++i){
             list.addNodeToTail(new FunctionPoint(step+step*i, 0));
+        }
+    }
+
+    public LinkedListTabulatedFunction(final double newLeftX, final double newRightX,FunctionPoint[] points) throws IllegalArgumentException{
+        leftX = newLeftX;
+        rightX = newRightX;
+        list = new PointList();
+        if (points.length<2) throw new IllegalArgumentException("counts of points must be >=2");
+        for(int i = 0; i<points.length-1;++i){
+            if (points[i].getX()>points[i+1].getX()) throw new IllegalArgumentException("points must be sorted");
+        }
+        for (int i = 0; i<points.length;++i){
+            list.addNodeToTail(new FunctionPoint(points[i]));
         }
     }
 

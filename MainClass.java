@@ -1,4 +1,4 @@
-import Functions.*;
+import functions.*;
 
 public class MainClass{
     public static void main(String[] arg) throws InappropriateFunctionPointException {
