@@ -1,7 +1,7 @@
 package Functions;
 
 
-interface TabulatedFunction{
+public interface TabulatedFunction{
     void addPoint(FunctionPoint point) throws InappropriateFunctionPointException;
     FunctionPoint getPoint(int n);
     double getLeftDomainBorder();
