@@ -18,5 +18,6 @@ public class TestFile {
 
         System.out.println(testTabFun.getFunctionValue(4));
         System.out.println(arrayTabulatedFunction.getFunctionValue(4));
+        System.out.println(Functions.Sum(testTabFun, arrayTabulatedFunction).getFunctionValue(4));
     }
 }

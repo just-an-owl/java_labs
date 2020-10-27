@@ -1,6 +1,6 @@
 package functions.basic;
 
-import functions.Function;
+
 import functions.InappropriateFunctionPointException;
 
 public class Tan extends TrigonometricFunction {
