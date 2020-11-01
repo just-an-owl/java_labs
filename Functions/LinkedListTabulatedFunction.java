@@ -1,8 +1,10 @@
 package functions;
 
 
+import java.io.Serializable;
 
-public class LinkedListTabulatedFunction implements TabulatedFunction{
+
+public class LinkedListTabulatedFunction implements TabulatedFunction, Serializable{
 
     private PointList list;
     private double leftX;

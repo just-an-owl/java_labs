@@ -3,8 +3,9 @@ package functions;
 import functions.FunctionPoint;
 
 import java.util.Arrays;
+import java.io.Serializable;
 
-public class ArrayTabulatedFunction implements TabulatedFunction {
+public class ArrayTabulatedFunction implements TabulatedFunction, Serializable {
     private FunctionPoint[] arrayPoint;
     private final double leftX;
     private final double rightX;

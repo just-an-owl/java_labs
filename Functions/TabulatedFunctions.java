@@ -41,7 +41,46 @@ public abstract class TabulatedFunctions {
             y=inputStream.readDouble();
             points[i]=new FunctionPoint(x,y);
         }
-//jdkdk
         return new LinkedListTabulatedFunction(leftX,rightX, points);
     }
+    public static void writeTabulatedFunction(TabulatedFunction function, Writer out){
+        PrintWriter writer = new PrintWriter(out);
+        int pointCount = function.getPointCount();
+
+        writer.println(pointCount);
+        writer.println(function.getLeftDomainBorder());
+        writer.println(function.getRightDomainBorder());
+
+        for (int i = 0; i < pointCount; i++) {
+            writer.println(function.getPointX(i));
+            writer.println(function.getPointY(i));
+        }
+    }
+
+    public static TabulatedFunction readTabulatedFunction(Reader in) throws IOException {
+        StreamTokenizer tokenizer = new StreamTokenizer(in);
+        tokenizer.nextToken();
+
+        int pointCount = (int) tokenizer.nval;
+        tokenizer.nextToken();
+        double left = (double) tokenizer.nval;
+        tokenizer.nextToken();
+        double right = (double) tokenizer.nval;
+
+        FunctionPoint points[] = new FunctionPoint[pointCount];
+        double x, y;
+        for (int i = 0; i < pointCount; i++) {
+            tokenizer.nextToken();
+            x = tokenizer.nval;
+            tokenizer.nextToken();
+            y = tokenizer.nval;
+
+            points[i] = new FunctionPoint(x, y);
+        }
+
+        return new ArrayTabulatedFunction(left, right, points);
+    }
+
+
+
 }
