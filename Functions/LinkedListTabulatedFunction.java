@@ -11,6 +11,7 @@ public class LinkedListTabulatedFunction implements TabulatedFunction, Serializa
     private double rightX;
 
 
+
     public LinkedListTabulatedFunction(final double newLeftX, final double newRightX, final int pointsCount){
         leftX = newLeftX;
         rightX = newRightX;
@@ -246,5 +247,6 @@ class PointList{
         down.linkUp = up;
         count--;
     }
+
 
 }

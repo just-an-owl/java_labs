@@ -80,7 +80,4 @@ public abstract class TabulatedFunctions {
 
         return new ArrayTabulatedFunction(left, right, points);
     }
-
-
-
 }

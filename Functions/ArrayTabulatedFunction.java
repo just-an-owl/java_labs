@@ -203,5 +203,27 @@ public class ArrayTabulatedFunction implements TabulatedFunction, Serializable {
             fullnessArrayPoint--;
         }
         else throw new FunctionPointIndexOutOfBoundsException("invalid index");
-    }    
+    }
+
+    public String toString(){
+        StringBuilder string = new StringBuilder();
+        for (FunctionPoint n:
+             arrayPoint) {
+            string.append("(" + n.getX() + ";" + n.getY() + "),");
+        }
+        return string.toString();
+    }
+
+    public boolean equals(Object o){
+        return o==this;
+    }
+
+    public int hashCode(){
+        return 1;
+    }
+
+    public ArrayTabulatedFunction clone(){
+        ArrayTabulatedFunction arrayTabulatedFunction = new ArrayTabulatedFunction(rightX, leftX, arrayPoint);
+        return arrayTabulatedFunction;
+    }
 }

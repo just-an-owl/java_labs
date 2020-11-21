@@ -30,4 +30,16 @@ public class FunctionPoint{
     public double getY(){
         return y;
     }
+    public String toString(){
+        return new String(x + " " + y);
+    }
+    public int hashCode(){
+        return Double.hashCode(x)*Double.hashCode(y);
+    }
+    public boolean equals(Object o){
+        return this==o;
+    }
+    public Object clone(){
+        return new FunctionPoint(this);
+    }
 }
