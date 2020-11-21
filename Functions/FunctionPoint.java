@@ -37,7 +37,12 @@ public class FunctionPoint{
         return Double.hashCode(x)*Double.hashCode(y);
     }
     public boolean equals(Object o){
-        return this==o;
+        if(o instanceof FunctionPoint){
+            if(((FunctionPoint) o).x==x && ((FunctionPoint) o).y==y)
+                return true;
+            return false;
+        }
+        return false;
     }
     public Object clone(){
         return new FunctionPoint(this);
