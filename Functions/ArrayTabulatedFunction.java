@@ -215,11 +215,32 @@ public class ArrayTabulatedFunction implements TabulatedFunction, Serializable {
     }
 
     public boolean equals(Object o){
-        return o==this;
+        try{
+            if (o instanceof TabulatedFunction){
+                if (fullnessArrayPoint == ((TabulatedFunction) o).getPointCount()){
+                    for (int i = 0; i<((TabulatedFunction) o).getPointCount(); ++i){
+                        if (arrayPoint[i].getX()!=((TabulatedFunction) o).getPoint(i).getX() &&
+                                arrayPoint[i].getY()!=((TabulatedFunction) o).getPoint(i).getY())
+                            return false;
+                    }
+                    return true;
+                }
+                else return false;
+            }
+            else return false;
+        }
+        catch (Exception ex){
+            return false;
+
+        }
+
     }
 
     public int hashCode(){
-        return 1;
+        int hash = 5;
+        hash = 31 * hash + Arrays.deepHashCode(this.arrayPoint);
+        hash = 31 * hash + this.getPointCount();
+        return hash;
     }
 
     public ArrayTabulatedFunction clone(){

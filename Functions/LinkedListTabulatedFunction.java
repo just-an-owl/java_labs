@@ -2,6 +2,7 @@ package functions;
 
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 
 public class LinkedListTabulatedFunction implements TabulatedFunction, Serializable{
@@ -32,6 +33,19 @@ public class LinkedListTabulatedFunction implements TabulatedFunction, Serializa
         }
         for (int i = 0; i<points.length;++i){
             list.addNodeToTail(new FunctionPoint(points[i]));
+        }
+    }
+
+    public LinkedListTabulatedFunction(final double newLeftX, final double newRightX,double[] values){
+        leftX = newLeftX;
+        rightX = newRightX;
+        list = new PointList();
+        if (values.length<2) throw new IllegalArgumentException("counts of points must be >=2");
+        double step;
+        step = (rightX-leftX)/(list.getCount()+2);
+        int iter;
+        for(iter=0;iter< list.getCount();iter++){
+            list.addNodeToTail(new FunctionPoint(leftX + step + iter * step, values[iter]));
         }
     }
 
@@ -156,6 +170,54 @@ public class LinkedListTabulatedFunction implements TabulatedFunction, Serializa
     @Override
     public void deletePoint(int index) {
         list.deletePointByIndex(index);
+    }
+
+    public String toString(){
+        StringBuilder string = new StringBuilder();
+        for (int i = 0; i<list.getCount(); ++i) {
+            FunctionPoint n = list.getPoint(i);
+            string.append("(" + n.getX() + ";" + n.getY() + "),");
+        }
+        return string.toString();
+    }
+
+    public boolean equals(Object o){
+        try{
+            if (o instanceof TabulatedFunction){
+                if (list.getCount() == ((TabulatedFunction) o).getPointCount()){
+                    for (int i = 0; i<((TabulatedFunction) o).getPointCount(); ++i){
+                        if (list.getPoint(i).getX()!=((TabulatedFunction) o).getPoint(i).getX() &&
+                                list.getPoint(i).getY()!=((TabulatedFunction) o).getPoint(i).getY())
+                            return false;
+                    }
+                    return true;
+                }
+                else return false;
+            }
+            else return false;
+        }
+        catch (Exception ex){
+            return false;
+        }
+
+    }
+
+    public int hashCode(){
+        int hash = 5;
+        FunctionPoint[] array = new FunctionPoint[list.getCount()];
+        for (int i = 0; i<list.getCount();++i)
+            array[i] = list.getPoint(i);
+        hash = 31 * hash + Arrays.deepHashCode(array);
+        hash = 31 * hash + this.getPointCount();
+        return hash;
+    }
+
+    public LinkedListTabulatedFunction clone(){
+        FunctionPoint[] array = new FunctionPoint[list.getCount()];
+        for (int i = 0; i<list.getCount();++i)
+            array[i] = list.getPoint(i);
+        LinkedListTabulatedFunction linkedListTabulatedFunction = new LinkedListTabulatedFunction(rightX, leftX, array);
+        return linkedListTabulatedFunction;
     }
 }
 

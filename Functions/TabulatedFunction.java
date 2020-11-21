@@ -12,4 +12,5 @@ public interface TabulatedFunction extends Function{
     double getPointY(final int index);
     void setPointY(final int index, final double Y) throws InappropriateFunctionPointException;
     void deletePoint(final int index);
+    Object clone() throws CloneNotSupportedException;
 }
